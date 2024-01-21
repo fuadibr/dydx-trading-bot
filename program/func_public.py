@@ -32,7 +32,7 @@ def get_candles_recent(client, market):
 
   # Construct and return close price series
   close_prices.reverse()
-  prices_result = np.array(close_prices).astype(np.float)
+  prices_result = np.array(close_prices).astype(float)
   return prices_result
 
 
@@ -107,6 +107,3 @@ def construct_market_prices(client):
 
   # Return result
   return df
-
-def construct_market_prices_test(client):
-  pprint(ISO_TIMES)
