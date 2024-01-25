@@ -71,8 +71,8 @@ def open_positions(client):
           # Get acceptable price in string format with correct number of decimals
           base_price = series_1[-1]
           quote_price = series_2[-1]
-          accept_base_price = float(base_price) * 1.01 if z_score < 0 else float(base_price) * 0.99
-          accept_quote_price = float(quote_price) * 1.01 if z_score > 0 else float(quote_price) * 0.99
+          accept_base_price = float(base_price) * 1.02 if z_score < 0 else float(base_price) * 0.98
+          accept_quote_price = float(quote_price) * 1.02 if z_score > 0 else float(quote_price) * 0.98
           failsafe_base_price = float(base_price) * 0.05 if z_score < 0 else float(base_price) * 1.7
           base_tick_size = markets["markets"][base_market]["tickSize"]
           quote_tick_size = markets["markets"][quote_market]["tickSize"]

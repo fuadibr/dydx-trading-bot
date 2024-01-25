@@ -1,9 +1,10 @@
-from constants import ABORT_ALL_POSITION, FIND_COINTEGRATED, PLACE_TRADES
+from constants import ABORT_ALL_POSITION, FIND_COINTEGRATED, PLACE_TRADES, MANAGE_EXITS
 from func_connections import connect_dydx
 from func_private import abort_all_positions
 from func_public import construct_market_prices
 from func_cointegration import store_cointegration_results
 from func_entry_pairs import open_positions
+from func_exit_pairs import manage_trade_exits
 
 if __name__ == "__main__":
     
@@ -45,9 +46,14 @@ if __name__ == "__main__":
             print("Error saving cointegration results: ", e)
             exit(1)
 
-        
-
-
+    # Place trades for open positions
+    if MANAGE_EXITS:
+        try:
+            print("Managing exists..")
+            manage_trade_exits(client)
+        except Exception as e:
+            print("Error managing exiting positions: ", e)
+            exit(1)    
 
     # Place trades for open positions
     if PLACE_TRADES:
