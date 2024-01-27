@@ -45,7 +45,7 @@ def calculate_cointegration(series_1, series_2):
   spread = series_1 - (hedge_ratio * series_2) #- intercept
   half_life = calculate_half_life(spread)
   t_check = coint_t < critical_value
-  coint_flag = 1 if p_value < 0.05 and t_check else 0
+  coint_flag = 1 if p_value < 0.04 and t_check else 0 #default value for p_value is 0.05
   return coint_flag, hedge_ratio, half_life
 
 

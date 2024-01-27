@@ -31,10 +31,14 @@ def open_positions(client):
   try:
     open_positions_file = open("bot_agents.json")
     open_positions_dict = json.load(open_positions_file)
+    #print("Opening bot_agents.json")
     for p in open_positions_dict:
       bot_agents.append(p)
+      #print("Appending to bot_agents.json... ", p)
+    #pprint(bot_agents)
   except:
     bot_agents = []
+    #print("Failed to open bot_agents.json")
   
   # Find ZScore triggers
   for index, row in df.iterrows():
@@ -71,8 +75,8 @@ def open_positions(client):
           # Get acceptable price in string format with correct number of decimals
           base_price = series_1[-1]
           quote_price = series_2[-1]
-          accept_base_price = float(base_price) * 1.02 if z_score < 0 else float(base_price) * 0.98
-          accept_quote_price = float(quote_price) * 1.02 if z_score > 0 else float(quote_price) * 0.98
+          accept_base_price = float(base_price) * 1.01 if z_score < 0 else float(base_price) * 0.99 #increase to 2% if not working
+          accept_quote_price = float(quote_price) * 1.01 if z_score > 0 else float(quote_price) * 0.99 #increase to 2% if not working
           failsafe_base_price = float(base_price) * 0.05 if z_score < 0 else float(base_price) * 1.7
           base_tick_size = markets["markets"][base_market]["tickSize"]
           quote_tick_size = markets["markets"][quote_market]["tickSize"]
@@ -150,3 +154,4 @@ def open_positions(client):
   if len(bot_agents) > 0:
     with open("bot_agents.json", "w") as f:
       json.dump(bot_agents, f)
+      #print("Success: Serialize jason file")
