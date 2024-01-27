@@ -10,9 +10,8 @@ from func_messaging import send_message
 # MAIN FUNCTION
 if __name__ == "__main__":
 
-    success = send_message("Salam Dunia..test sekali lagi")
-    print(success)
-    exit(1)
+    # Message on start
+    send_message("Bot launch successful..")
     
     # Connect to client
     try:
@@ -20,6 +19,8 @@ if __name__ == "__main__":
         client = connect_dydx()
     except Exception as e:
         print("Error connecting to client: ",e)
+        # Send Message
+        send_message(f"Failed to connect to client {e}")
         exit(1)
 
     # Abort all open position
@@ -29,6 +30,7 @@ if __name__ == "__main__":
             close_orders = abort_all_positions(client)
         except Exception as e:
             print("Error closing all positions: ",e)
+            send_message(f"Error closing all positions {e}")
             exit(1)
     
     # Find Cointegrated Pairs
@@ -40,6 +42,7 @@ if __name__ == "__main__":
             df_market_prices = construct_market_prices(client)
         except Exception as e:
             print("Error constructing market prices: ", e)
+            send_message(f"Error constructing market prices {e}")
             exit(1)
 
         # Store Cointegrated Pairs
@@ -50,6 +53,7 @@ if __name__ == "__main__":
                 print("Error saving cointegration results.")
         except Exception as e:
             print("Error saving cointegration results: ", e)
+            send_message(f"Error saving cointegration results {e}")
             exit(1)
     
     # Run as always on
@@ -62,6 +66,7 @@ if __name__ == "__main__":
                 manage_trade_exits(client)
             except Exception as e:
                 print("Error managing exiting positions: ", e)
+                send_message(f"Error managing exiting position {e}")
                 exit(1)    
 
         # Place trades for open positions
@@ -71,5 +76,6 @@ if __name__ == "__main__":
                 open_positions(client)
             except Exception as e:
                 print("Error trading pairs: ", e)
+                send_message(f"Error opening trades {e}")
                 exit(1)
     
